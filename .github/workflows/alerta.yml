@@ -1,0 +1,24 @@
+name: Notificacion NTFY
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar Hola Mundo
+        run: node app.js
+
+      - name: Enviar notificacion a ntfy
+        run: |
+          curl -H "Title: Nuevo Push en Main" \
+               -H "Priority: high" \
+               -d "Se ha realizado un push al repositorio ${{ github.repository }} por ${{ github.actor }}" \
+               https://ntfy.sh/devops-itla
